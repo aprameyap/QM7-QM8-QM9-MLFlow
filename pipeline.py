@@ -9,10 +9,12 @@ from mlflow import log_metric, log_param, log_artifacts
 # 
 # Use the debugger, or print() statements, so you can watch exectution flow as it happens
 # practice explaining it to youself and then when you're done, let's have a google-meeting
-# and I will ask you heaps of questions about the code
-# 
+# and I will ask you heaps of questions about the code, you gotta know this code really well, because
+# this is the core of machine learning.
 
 # Then after that, we can come up with a set of steps to do the QM7 Dataset!
+# Once you understand the data cleaning, vectorization and training and evaluation steps
+# We can talk about how this applies in the chemical domain!
 
 if __name__ == "__main__":
     # Log a parameter (key-value pair)

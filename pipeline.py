@@ -99,9 +99,6 @@ if __name__ == "__main__":
     else:
         mlflow.sklearn.log_model(lr, "model")
 
-
-
+        
 print(lr.intercept_)
 print(lr.coef_)
-
-

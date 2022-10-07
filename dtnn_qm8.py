@@ -17,12 +17,13 @@ train_dataset, valid_dataset, test_dataset = datasets
 
 metric = [dc.metrics.Metric(dc.metrics.pearson_r2_score, mode="regression"), dc.metrics.Metric(dc.metrics.mean_absolute_error, mode="regression")]
 
-batch_size = float(sys.argv[1]) if len(sys.argv) > 50 else 50
+batch_size = 50
 n_embedding = 20
 n_distance = 51
 distance_min = -1.
 distance_max = 9.2
 n_hidden = 15
+learning_rate = float(input("Learning rate= ")). #takes learning rate as a hyperparameter
 
 with mlflow.start_run():
     model = dc.models.DTNNModel(
@@ -34,7 +35,7 @@ with mlflow.start_run():
     distance_max=distance_max,
     output_activation=False,
     batch_size=batch_size,
-    learning_rate=0.0001,
+    learning_rate=learning_rate,
     use_queue=False,
     mode="regression")
 
@@ -43,7 +44,7 @@ with mlflow.start_run():
     train_scores = model.evaluate(train_dataset, metric, transformers)
     valid_scores = model.evaluate(valid_dataset, metric, transformers)
 
-    mlflow.log_param("Batch size", batch_size)
+    mlflow.log_param("Learning Rate", learning_rate)
     mlflow.log_metric("MAE", valid_scores.get("mean_absolute_error"))
     mlflow.log_metric("Pearson R2", valid_scores.get("pearson_r2_score"))
 

@@ -19,7 +19,7 @@ import sys
 featurizer = dc.feat.CoulombMatrix(max_atoms = 50)
 
 tasks, datasets, transformers = dc.molnet.load_qm7(
-    featurizer= featurizer, splitter='stratified', move_mean=False)
+    featurizer= featurizer, splitter='stratified', move_mean=False, reload=False)
 
 train, valid, test = datasets
 

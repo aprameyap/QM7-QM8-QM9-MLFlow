@@ -1,0 +1,57 @@
+from __future__ import print_function
+from __future__ import division
+from __future__ import unicode_literals
+
+import numpy as np
+from sklearn.model_selection import learning_curve
+np.random.seed(123)
+import tensorflow as tf
+tf.random.set_seed(123)
+import deepchem as dc
+import mlflow
+
+tasks, datasets, transformers = dc.molnet.load_qm9()
+train_dataset, valid_dataset, test_dataset = datasets
+
+
+metric = [dc.metrics.Metric(dc.metrics.pearson_r2_score, mode="regression"), dc.metrics.Metric(dc.metrics.mean_absolute_error, mode="regression")]
+
+
+batch_size = 50
+n_embedding = 20
+n_distance = 51
+distance_min = -1.
+distance_max = 9.2
+n_hidden = 15
+learning_rate = float(input("Learning rate=")) #Takes learning rate as a hyperparameter
+
+with mlflow.start_run():
+    model = dc.models.DTNNModel(
+    len(tasks),
+    n_embedding=n_embedding,
+    n_hidden=n_hidden,
+    n_distance=n_distance,
+    distance_min=distance_min,
+    distance_max=distance_max,
+    output_activation=False,
+    batch_size=batch_size,
+    learning_rate=learning_rate,
+    use_queue=False,
+    mode="regression")
+
+
+    model.fit(train_dataset, nb_epoch=20)
+
+    print("Evaluating model")
+    train_scores = model.evaluate(train_dataset, metric, transformers)
+    valid_scores = model.evaluate(valid_dataset, metric, transformers)
+
+    mlflow.log_param("Learning Rate", learning_rate)
+    mlflow.log_metric("MAE", valid_scores.get("mean_absolute_error"))
+    mlflow.log_metric("Pearson R2", valid_scores.get("pearson_r2_score"))
+
+print("Train scores")
+print(train_scores)
+
+print("Validation scores")
+print(valid_scores)

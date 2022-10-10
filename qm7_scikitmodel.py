@@ -39,5 +39,4 @@ model = dc.models.SingletaskToMultitask(tasks, model_builder)
 
 model.fit(train)
 
-#Here i'm not able to fit the model, as the x array of the diskdataset has 3 dimensions.
-#So it raises a value error saying "Found array with dim 3. KernelRidge expected <= 2"
+#Need to find a way to change the dimensions of the coulomb matrix

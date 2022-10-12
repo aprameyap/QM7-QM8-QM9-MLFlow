@@ -17,7 +17,7 @@ train_dataset, valid_dataset, test_dataset = datasets
 metric = [dc.metrics.Metric(dc.metrics.pearson_r2_score, mode="regression"), dc.metrics.Metric(dc.metrics.mean_absolute_error, mode="regression")]
 
 
-batch_size = 50
+batch_size = 50 #Make hyperparameters of the following
 n_embedding = 20
 n_distance = 51
 distance_min = -1.

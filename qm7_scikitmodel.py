@@ -37,6 +37,6 @@ with mlflow.start_run():
         
 model = dc.models.SingletaskToMultitask(tasks, model_builder)
 
-model.fit(train)
+model.fit(train) #CoulombMatrix is 2D, find a way to flatten it.
 
 #Need to find a way to change the dimensions of the coulomb matrix
